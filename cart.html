@@ -1,0 +1,1000 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+</head>
+<body>
+    <h1>Cart</h1>
+    <ul id="cart"></ul>
+    <button id="buy-button" style="display: none">Buy</button>
+    
+    <h2>Total: $<span id="total">0</span></h2>
+    
+    <a href="index.html">Back to Menu</a>
+    
+    <script>
+        const cart = document.getElementById('cart');
+        const total = document.getElementById('total');
+        const buyButton = document.getElementById('buy-button');
+
+        const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+
+        function updateCart() {
+            cart.innerHTML = '';
+            let cartTotal = 0;
+
+            cartData.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - Quantity: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
+                cart.appendChild(listItem);
+                cartTotal += item.price * item.quantity;
+            });
+
+            total.textContent = cartTotal.toFixed(2);
+
+            if (cartData.length > 0) {
+                buyButton.style.display = 'block';
+            } else {
+                buyButton.style.display = 'none';
+            }
+        }
+
+        updateCart();
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Menu</title>
+    
+<!-- <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<link rel="stylesheet" href="styles.css">
+    <!--box icon link--><link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+<!--------------------Jquery Cdn--------->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--------------------Jquery Cdn--------->
+
+<!-----------------------Bootstrap CDN fo jquery,popper and js--------------->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-----------------------Bootstrap CDN fo jquery,popper and js--------------->
+
+<!-- ----------------LIght BOx for Gallery------------
+<link rel="stylesheet" href="lightbox.min.css">
+<script type="text/javascript" src="lightbox-plus-jquery.min.js"></script> -->
+<!------------------LIght BOx for Gallery-------------->
+
+<!-- -----------------------Flickity For Slider-----
+<link rel="stylesheet" href="https://npmcdn.com/flickity@1.2/dist/flickity.min.css">
+<script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script> -->
+
+<!-------------------------Flickity For Slider------->
+
+
+
+<script>
+
+$(document).ready(function(){
+
+    $('.carousel').flickity({ // options
+    cellAlign: 'left',
+    wrapAround: true,
+    pageDots: false,
+    autoPlay: true,
+    
+    });
+})
+
+
+$(document).ready(function(){
+    $('.carousely').flickity({ // options
+    cellAlign: 'left',
+    wrapAround: true,
+    pageDots: true,
+    
+});
+
+})
+
+<!------------------------Light BOx OPtions------------->
+
+lightbox.option({
+'resizeDuration': 100,
+'wrapAround': true,
+'alwaysShowNavOnTouchDevices': true
+})
+
+</script>
+</head>
+
+<!-- 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .menu-section {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            padding: 15px;
+            width: 30%;
+        }
+
+        .menu-section h2 {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin: 0;
+        }
+
+        .menu-item {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            margin: 10px 0;
+            padding: 15px;
+        }
+
+        .menu-item h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .menu-item p {
+            margin: 10px 0;
+        }
+
+        .menu-item .price {
+            font-weight: bold;
+            color: #e44d26;
+        }
+
+        .add-to-cart {
+            display: flex;
+            align-items: center;
+        }
+
+        .add-to-cart button {
+            margin-left: 10px;
+            background-color: #e44d26;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-to-cart button:hover {
+            background-color: #ff6e40;
+        }
+
+        .cart-container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .cart-container h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .cart-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cart-container li {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
+        .cart-container .total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .buy-button {
+            background-color: #e44d26;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .buy-button:hover {
+            background-color: #ff6e40;
+        }
+    </style>
+</head>
+<body>
+    <h1>Food Menu</h1>
+
+    <div class="menu">
+        <div class="menu-section">
+            <h2>Veg</h2>
+            <div class="menu-item">
+                <h2>Spring Rolls</h2>
+                <p>Price: $6.99</p>
+                <div class="add-to-cart" data-name="Spring Rolls" data-price="6.99">
+                    <button class="minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="plus">+</button>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <h2>Caprese Salad</h2>
+                <p>Price: $8.99</p>
+                <div class="add-to-cart" data-name="Caprese Salad" data-price="8.99">
+                    <button class="minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="plus">+</button>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h2>Non-Veg</h2>
+            <div class="menu-item">
+                <h2>Chicken Alfredo</h2>
+                <p>Price: $14.99</p>
+                <div class="add-to-cart" data-name="Chicken Alfredo" data-price="14.99">
+                    <button class="minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="plus">+</button>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <h2>Beef Burger</h2>
+                <p>Price: $11.99</p>
+                <div class="add-to-cart" data-name="Beef Burger" data-price="11.99">
+                    <button class="minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="plus">+</button>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h2>Drinks</h2>
+            <div class="menu-item">
+                <h2>Cola</h2>
+                <p>Price: $2.99</p>
+                <div class="add-to-cart" data-name="Cola" data-price="2.99">
+                    <button class="minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="plus">+</button>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <h2>Orange Juice</h2>
+                <p>Price: $3.99</p>
+                <div class="add-to-cart" data-name="Orange Juice" data-price="3.99">
+                    <button class="minus">-</button>
+                    <span class="quantity">0</span>
+                    <button class="plus">+</button>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-container">
+        <h2>Cart</h2>
+        <ul id="cart"></ul>
+        <p class="total">Total: $<span id="total">0</span></p>
+        <button class="buy-button" style="display: none">Buy</button>
+    </div>
+
+    <script>
+        // JavaScript for adding items to the cart
+        const addButtons = document.querySelectorAll('.plus');
+        const minusButtons = document.querySelectorAll('.minus');
+        const quantityElements = document.querySelectorAll('.quantity');
+        const cartButtons = document.querySelectorAll('.add-to-cart-button');
+        const cart = document.getElementById('cart');
+        const total = document.getElementById('total');
+        const buyButton = document.querySelector('.buy-button');
+
+        let cartItems = [];
+
+        addButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                incrementQuantity(index);
+            });
+        });
+
+        minusButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                decrementQuantity(index);
+            });
+        });
+
+        cartButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                const name = button.parentElement.getAttribute('data-name');
+                const price = parseFloat(button.parentElement.getAttribute('data-price'));
+                const quantity = parseInt(quantityElements[index].textContent);
+
+                if (quantity > 0) {
+                    const existingItem = cartItems.find(item => item.name === name);
+
+                    if (existingItem) {
+                        existingItem.quantity += quantity;
+                    } else {
+                        cartItems.push({ name, price, quantity });
+                    }
+
+                    quantityElements[index].textContent = '0';
+                    updateCart();
+                }
+            });
+        });
+
+        function incrementQuantity(index) {
+            const quantity = parseInt(quantityElements[index].textContent);
+            quantityElements[index].textContent = quantity + 1;
+        }
+
+        function decrementQuantity(index) {
+            const quantity = parseInt(quantityElements[index].textContent);
+            if (quantity > 0) {
+                quantityElements[index].textContent = quantity - 1;
+            }
+        }
+
+        function updateCart() {
+            cart.innerHTML = '';
+            let cartTotal = 0;
+
+            cartItems.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - Quantity: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
+                cart.appendChild(listItem);
+                cartTotal += item.price * item.quantity;
+            });
+
+            total.textContent = cartTotal.toFixed(2);
+
+            if (cartItems.length > 0) {
+                buyButton.style.display = 'block';
+            } else {
+                buyButton.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html> -->
+<body>
+<div class="container bg-dark text-warning" id="menu">
+    <div class="row">
+        <div class="col-12 text-center padding">
+            <h4 class="text-center text-warning bg-dark font-weight-bold ">Our Menu</h4>
+        </div>
+    </div>
+<div class="container">
+    <div id="acordin">
+        <div class="row">
+            <div class="col-12 text-center menu-link">
+                <span class="text-warning">Click here-></span>
+                <a href="#menucarousel" data-slide-to="0" class="btn btn-lg bg-success" id="main">Veg</a>
+                <a href="#menucarousel" data-slide-to="1" class="btn btn-lg bg-danger">Non-Veg</a>
+                <a href="#menucarousel" data-slide-to="2" class="btn btn-lg bg-info">Drinks</a>
+            </div>
+        </div>
+
+        <div id="menucarousel" class="carousel slide col-lg-7 col-sm-12 mx-auto" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active text-center">
+                    
+                    <p class="lead text-white">Veg</p>
+                    <ol class="ml-5">
+                        <!-- Veg items here -->
+                        <li>Vegetable Pad Thai - $12.99</li>
+                        <li>Eggplant Parmesan - $13.99</li>
+                        <li>Garden Vegetable Soup - $5.99</li>
+                        <li>Mango Lassi - $4.99</li>
+                        <li>Classic Mojito - $6.99</li>
+                        <li>Strawberry Daiquiri - $7.99</li>
+                        <li>Cold Brew Coffee - $4.99</li>
+                        <li>Orange Juice - $3.99</li>
+                        <li>Lemonade - $3.49</li>
+                        <li>Hot Chocolate - $4.49</li>
+
+                    </ol>
+                </div>
+
+                <div class="carousel-item text-center">
+                    <p class="lead text-white">Non-veg</p>
+                    <ol class="ml-5">
+                        <!-- Non-veg items here -->
+                        <li>Vegetable Pad Thai - $12.99</li>
+                        <li>Eggplant Parmesan - $13.99</li>
+                        <li>Garden Vegetable Soup - $5.99</li>
+                        <li>Mango Lassi - $4.99</li>
+                        <li>Classic Mojito - $6.99</li>
+                        <li>Strawberry Daiquiri - $7.99</li>
+                        <li>Cold Brew Coffee - $4.99</li>
+                        <li>Orange Juice - $3.99</li>
+                        <li>Lemonade - $3.49</li>
+                        <li>Hot Chocolate - $4.49</li>
+
+                    </ol>
+                </div>
+
+                <div class="carousel-item text-center">
+                    <p class="lead text-white">Drinks</p>
+                    <ol class="ml-5" id="drink-list">
+                        <!-- Display a limited number of items initially -->
+                        <li>Caprese Salad - $8.99</li>
+                        <li>Mushroom Risotto - $14.99</li>
+                        <li>Chicken Caesar Salad - $10.99</li>
+                            <li>Beef and Broccoli Stir-Fry - $14.99</li>
+                            <li>Shrimp Scampi - $16.99</li>
+                            <li>Margherita Pizza - $11.99</li>
+                            <li>Veggie Burger - $10.99</li>
+                            <li>Pasta Primavera - $13.99</li>
+                            <li>Paneer Tikka - $15.99</li>
+                        <!-- Add more items here as needed -->
+                    </ol>
+                
+                    <button id="view-more-btn" class="btn btn-primary" onclick="viewMore()">View More</button>
+                </div>
+                
+                <script>
+                    // JavaScript function to handle "View More" button
+                    function viewMore() {
+                        const drinkList = document.getElementById('drink-list');
+                
+                        // Add more items to the list
+                        drinkList.innerHTML += `
+                            <li>Vegetable Stir-Fry - $12.99</li>
+                            <li>Vegetable Biryani - $14.99</li>
+                                                                <li>Hummus and Pita - $7.99</li>
+                                                                <li>Quinoa and Roasted Vegetable Salad - $11.99</li>
+                                                                <li>Vegetable Pad Thai - $12.99</li>
+                                                                <li>Eggplant Parmesan - $13.99</li>
+                                                                <li>Garden Vegetable Soup - $5.99</li>
+                                                                <li>Mango Lassi - $4.99</li>
+                                                                <li>Classic Mojito - $6.99</li>
+                                                                <li>Strawberry Daiquiri - $7.99</li>
+                                                                <li>Cold Brew Coffee - $4.99</li>
+                                                                <li>Orange Juice - $3.99</li>
+                                                                <li>Lemonade - $3.49</li>
+                                                                <li>Hot Chocolate - $4.49</li>
+                                                                <li>Iced Tea - $2.99</li>
+                            
+                            <!-- Add more items as needed -->
+                        `;
+                
+                        // Hide the "View More" button if all items are displayed
+                        const viewMoreBtn = document.getElementById('view-more-btn');
+                        viewMoreBtn.style.display = 'none';
+                    }
+                </script>
+                
+
+            <!-- Carousel controls should be placed outside the inner div -->
+            <a class="carousel-control-prev" href="#menucarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#menucarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Photo Gallery</title>
+  <style>
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .main-photo {
+      width: 100%;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Photo Gallery</h1>
+
+  <div id="thumbnail-container">
+    <img class="thumbnail" src="food1.jpg" onclick="showPhoto('food1.jpg')" />
+    <img class="thumbnail" src="food2.jpg" onclick="showPhoto('food2.jpg')" />
+    <img class="thumbnail" src="food3.jpg" onclick="showPhoto('food3.jpg')" />
+    <img class="thumbnail" src="food2.jpg" onclick="showPhoto('food2.jpg')" />
+    <img class="thumbnail" src="food1.jpg" onclick="showPhoto('food1.jpg')" />
+  </div>
+
+  <img id="main-photo" class="main-photo" src="food2.jpg" />
+
+  <script>
+    function showPhoto(photoSrc) {
+      var mainPhoto = document.getElementById('main-photo');
+      mainPhoto.src = photoSrc;
+      mainPhoto.style.display = 'block';
+    }
+  </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Photo Gallery</title>
+  <style>
+    #photo-icon {
+      width: 200px; /* Set the size of your icon */
+      height: 200px;
+      cursor: pointer;
+    }
+
+    .main-photo {
+      width: 100%;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Photo Gallery</h1>
+
+  <img id="photo-icon" src="food1.jpg" onclick="showPhoto()" />
+
+  <img id="main-photo" class="main-photo" src="food2.jpg" />
+
+  <script>
+    var photoIndex = 1;
+    var photos = ["food1.jpg", "food2.jpg", "food3.jpg", "food2.jpg", "food1.jpg"];
+
+    function showPhoto() {
+      var mainPhoto = document.getElementById('main-photo');
+      mainPhoto.src = photos[photoIndex - 1];
+      mainPhoto.style.display = 'block';
+
+      photoIndex++;
+      if (photoIndex > photos.length) {
+        photoIndex = 1;
+      }
+    }
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Filter</title>
+  <style>
+    /* Add some basic styling */
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Card Filter</h2>
+
+  <!-- <label for="cityFilter">Select City:</label>
+  <select id="cityFilter">
+    <option value="all">All Cities</option>
+    <option value="city1">City 1</option>
+    <option value="city2">City 2</option>
+    <!-- Add more cities as needed -->
+  </select>
+
+  <label for="priceFilter">Select Price Range:</label>
+  <select id="priceFilter">
+    <option value="all">All Prices</option>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+    <!-- Add more price ranges as needed -->
+  </select>
+
+  <div id="cardList">
+    <!-- Display your group of cards here -->
+    <div class="card" data-city="city1" data-price="low">Card 1</div>
+    <div class="card" data-city="city2" data-price="medium">Card 2</div>
+    <!-- Add more cards with data attributes -->
+  </div> -->
+
+  <!-- <script>
+    // JavaScript for filtering cards
+    const cityFilter = document.getElementById('cityFilter');
+    const priceFilter = document.getElementById('priceFilter');
+    const cardList = document.getElementById('cardList').children;
+
+    // Event listener for changes in filters
+    cityFilter.addEventListener('change', filterCards);
+    priceFilter.addEventListener('change', filterCards);
+
+    function filterCards() {
+      const selectedCity = cityFilter.value;
+      const selectedPrice = priceFilter.value;
+
+      // Loop through cards and hide/show based on filters
+      for (const card of cardList) {
+        const city = card.getAttribute('data-city');
+        const price = card.getAttribute('data-price');
+
+        const cityMatch = selectedCity === 'all' || selectedCity === city;
+        const priceMatch = selectedPrice === 'all' || selectedPrice === price;
+
+        // Show the card if both city and price match the selected filters, otherwise hide it
+        if (cityMatch && priceMatch) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      }
+    }
+  </script> -->
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        .image {
+            max-width: 100%
+        }
+        .row {
+            justify-content: space-between;
+        }
+        .discription:hover {
+            cursor: pointer;
+        }
+        .reviws:hover {
+            cursor: pointer;
+        }
+        .title:hover {
+            cursor: pointer;
+            text-decoration: underline;
+
+        }
+        a {
+            color: black;
+        }
+        a:hover {
+            text-decoration: none;
+            color: black;
+        }
+        .card {
+            background-color: rgb(251, 170, 237);
+            padding: 0px;
+            border-radius: 8px;
+        }
+        img {
+            border-radius: 8px;
+        }
+
+        .filter {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="filter">
+        <label for="cityFilter">Select City:</label>
+        <select id="cityFilter">
+            <option value="all">All Cities</option>
+            <option value="Jaipur">Jaipur</option>
+            <option value="Banglore">Banglore</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Mumbai">Mumbai</option>
+            <!-- Add more cities as needed -->
+        </select>
+
+        <label>Price Range:</label>
+        <div>
+            <input type="checkbox" id="range0-500" value="0-500">
+            <label for="range0-500">0-500</label>
+
+            <input type="checkbox" id="range500-1000" value="500-1000">
+            <label for="range500-1000">500-1000</label>
+
+            <input type="checkbox" id="range1000-1500" value="1000-1500">
+            <label for="range1000-1500">1000-1500</label>
+
+            <input type="checkbox" id="range1500-2000" value="1500-2000">
+            <label for="range1500-2000">1500-2000</label>
+        </div>
+    </div>
+
+    <!-- Your card content goes here -->
+    <div class="row m-5">
+        <div class="card col-3 mx-auto">
+            <img src="food1.jpg" alt="1" class="image mx-auto" >
+            <a href="index.html">
+            <div class="container ">
+            <div class="row ">
+            <div class="title "><b>Shree ram caters</b>
+            </div>
+            <div class="reviws">Reviews:4.8</div>
+            </div>
+            <div class="row">
+                <div class="discription">Jaipur</div>
+                <div class="veg">Veg:600rs</div><div class="nonveg"> Nonveg:850rs</Nonveg:500rs></div>
+            </div>
+            <div class="row">
+                    <div class="discription">max:2000 and min:100
+            </div>
+        </div></a>
+    </div>
+    </div>
+        <div class="card col-3 mx-auto">
+            <img src="food1.jpg" alt="1" class="image mx-auto" >
+            <div class="container ">
+    
+            <div class="row ">
+            <div class=" title "><b>Shree ram caters</b>
+            </div>
+            <div class="reviws">Reviews:5</div>
+            </div>
+            <div class="row">
+                <div class="discription">Banglore</div>
+                <div class="veg">500rs</div><div class="nonveg">950rs</div>
+            </div>
+            <div class="row">
+                    <div class="discription">max:2000 and min:100
+            </div>
+            </div>
+            </div>
+        </div>
+        <div class="card col-3 mx-auto">
+            <img src="food1.jpg" alt="1" class="image mx-auto" >
+            <div class="container ">
+    
+            <div class="row ">
+    
+            <div class="title  "><b>Shree ram caters</b>
+            </div>
+            <div class="reviws">Reviews:3.8</div>
+            </div>
+            <div class="row">
+                <div class="discription">Chennai</div>
+                <div class="veg">400rs</div><div class="nonveg"> 700rs</Nonveg:500rs></div>
+            </div>
+            <div class="row">
+                    <div class="discription">max:2000 and min:100
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    
+        <div class="row m-5">
+            <div class="card col-3 mx-auto">
+                <img src="food1.jpg" alt="1" class="image mx-auto" >
+                <div class="container ">
+                <div class="row ">
+                <div class="title  "><b>Shree ram caters</b>
+                </div>
+                <div class="reviws">Reviews:3.5</div>
+                </div>
+                <div class="row">
+                    <div class="discription">Mumbai</div>
+                    <div class="veg">600rs</div><div class="nonveg">800rs</Nonveg:500rs></div>
+                </div>
+                <div class="row">
+                        <div class="discription">max:2000 and min:100
+                </div>
+            </div>
+        </div>
+        </div>
+            <div class="card col-3 mx-auto">
+                <img src="food1.jpg" alt="1" class="image mx-auto" >
+                <div class="container ">
+        
+                <div class="row ">
+                <div class="title  "><b>Shree ram caters</b>
+                </div>
+                <div class="reviws">Reviews:4.5</div>
+                </div>
+                <div class="row">
+                    <div class="discription">Chennai</div>
+                    <div class="veg">1000rs</div><div class="nonveg"> 1300rs</Nonveg:500rs></div>
+                </div>
+                <div class="row">
+                        <div class="discription">max:2000 and min:100
+                </div>
+                </div>
+                </div>
+            </div>
+            <div class="card col-3 mx-auto">
+                <img src="food1.jpg" alt="1" class="image mx-auto" >
+                <div class="container ">
+    
+                <div class="row ">
+        
+                <div class="title  "><b>Shree ram caters</b>
+                </div>
+                <div class="reviws">Reviews:4.0</div>
+                </div>
+                <div class="row">
+                    <div class="discription">Jaipur</div>
+                    <div class="veg">500rs</div><div class="nonveg"> 900rs</Nonveg:500rs></div>
+                </div>
+                <div class="row">
+                        <div class="discription">max:2000 and min:100
+                </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            <div class="row m-5">
+                <div class="card col-3 mx-auto">
+                    <img src="food1.jpg" alt="1" class="image mx-auto" >
+                    <div class="container ">
+                    <div class="row ">
+                    <div class="title  "><b>Shree ram caters</b>
+                    </div>
+                    <div class="reviws">Reviews:4.8</div>
+                    </div>
+                    <div class="row">
+                        <div class="discription">Banglore</div>
+                        <div class="veg">700rs</div><div class="nonveg"> 1000rs</Nonveg:500rs></div>
+                    </div>
+                    <div class="row">
+                            <div class="discription">max:2000 and min:100
+                    </div>
+                </div>
+            </div>
+            </div>
+                <div class="card col-3 mx-auto">
+                    <img src="food1.jpg" alt="1" class="image mx-auto" >
+                    <div class="container ">
+            
+                    <div class="row ">
+                    <div class="title  "><b>Shree ram caters</b>
+                    </div>
+                    <div class="reviws">Reviews:3.0</div>
+                    </div>
+                    <div class="row">
+                        <div class="discription">Mumbai</div>
+                        <div class="veg">400rs</div><div class="nonveg">800rs</Nonveg:500rs></div>
+                    </div>
+                    <div class="row">
+                            <div class="discription">max:2000 and min:100
+                    </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="card col-3 mx-auto">
+                    <img src="food1.jpg" alt="1" class="image mx-auto" >
+                    <div class="container ">
+    
+                    <div class="row ">
+            
+                    <div class="title  "><b>Shree ram caters</b>
+                    </div>
+                    <div class="reviws">Reviews:4.0</div>
+                    </div>
+                    <div class="row">
+                        <div class="discription">Jaipur</div>
+                        <div class="veg">1200rs</div><div class="nonveg"> 1500rs</Nonveg:500rs></div>
+                    </div>
+                    <div class="row">
+                            <div class="discription">max:2000 and min:100
+                    </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+
+    <script>
+        // JavaScript for filtering cards
+        const cityFilter = document.getElementById('cityFilter');
+        const priceCheckboxes = document.querySelectorAll('[type="checkbox"][id^="range"]');
+        const cardList = document.querySelectorAll('.card');
+
+        // Event listeners for changes in filters
+        cityFilter.addEventListener('change', filterCards);
+        priceCheckboxes.forEach(checkbox => checkbox.addEventListener('change', filterCards));
+
+        function filterCards() {
+            const selectedCity = cityFilter.value;
+            const selectedPrices = Array.from(priceCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            // Loop through cards and hide/show based on filters
+            cardList.forEach(card => {
+                const city = card.querySelector('.discription').textContent;
+                const minPrice = parseInt(card.querySelector('.reviws').textContent.split(':').pop().trim());
+                const maxPrice = parseInt(card.querySelector('.discription:last-child').textContent.split(':').pop().trim());
+
+                const cityMatch = selectedCity === 'all' || selectedCity === city;
+                const priceMatch = selectedPrices.length === 0 || selectedPrices.some(range => checkPriceRange(minPrice, maxPrice, range));
+
+                // Show the card if both city and price match the selected filters, otherwise hide it
+                if (cityMatch && priceMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function checkPriceRange(min, max, range) {
+            const [lower, upper] = range.split('-').map(Number);
+            return min >= lower && max <= upper;
+        }
+
+        // Initial filter
+        filterCards();
+    </script>
+
+</body>
+</html>
+
+
